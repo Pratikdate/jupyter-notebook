@@ -1,0 +1,236 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 74,
+   "id": "dcdab4de",
+   "metadata": {
+    "run_control": {
+     "marked": false
+    }
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/sklearn/base.py:441: UserWarning: X does not have valid feature names, but DecisionTreeClassifier was fitted with feature names\n",
+      "  warnings.warn(\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "array(['Dance', 'HipHop'], dtype=object)"
+      ]
+     },
+     "execution_count": 74,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import pandas as pd \n",
+    "from sklearn.tree import DecisionTreeClassifier\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "from sklearn.metrics import accuracy_score \n",
+    "import joblib\n",
+    "#music_data=pd.read_csv(\"music.csv\")\n",
+    "#X=music_data.drop(columns=[\"genre\"])\n",
+    "#Y=music_data[\"genre\"]\n",
+    "#x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.1)\n",
+    "\n",
+    "model=joblib.load(\"music.joblib\")\n",
+    "\n",
+    "prdict=model.predict([[21,0],[1,1]])\n",
+    "prdict\n",
+    "\n",
+    "model=DecisionTreeClassifier()\n",
+    "model.fit(x_train,y_train)\n",
+    "prediction=model.predict(x_test)\n",
+    "\n",
+    "#score=accuracy_score(y_test,prediction)\n",
+    "\n",
+    "#score\n",
+    "\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 82,
+   "id": "677b67ba",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn import tree\n",
+    "import pandas as pd\n",
+    "from sklearn.tree import DecisionTreeClassifier\n",
+    "music_data=pd.read_csv(\"music.csv\")\n",
+    "X=music_data.drop(columns=\"genre\")\n",
+    "Y=music_data[\"genre\"]\n",
+    "\n",
+    "\n",
+    "model=DecisionTreeClassifier()\n",
+    "model.fit(X,Y)\n",
+    "\n",
+    "\n",
+    "tree.export_graphviz(model,out_file=\"music.dot\",\n",
+    "                    feature_names=[\"age\",\"gender\"],\n",
+    "                    class_names=sorted(Y.unique()),\n",
+    "                    label=\"all\",\n",
+    "                    rounded=True,\n",
+    "                    filled=True\n",
+    "                     \n",
+    "                    )"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 85,
+   "id": "d9abfab4",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "ExecutableNotFound",
+     "evalue": "failed to execute PosixPath('dot'), make sure the Graphviz executables are on your systems' PATH",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mFileNotFoundError\u001b[0m                         Traceback (most recent call last)",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/graphviz/backend/execute.py\u001b[0m in \u001b[0;36mrun_check\u001b[0;34m(cmd, input_lines, encoding, capture_output, quiet, **kwargs)\u001b[0m\n\u001b[1;32m     82\u001b[0m             \u001b[0;32massert\u001b[0m \u001b[0miter\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0minput_lines\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0minput_lines\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 83\u001b[0;31m             \u001b[0mproc\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_run_input_lines\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcmd\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0minput_lines\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mkwargs\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     84\u001b[0m         \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/graphviz/backend/execute.py\u001b[0m in \u001b[0;36m_run_input_lines\u001b[0;34m(cmd, input_lines, kwargs)\u001b[0m\n\u001b[1;32m    102\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0m_run_input_lines\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcmd\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0minput_lines\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 103\u001b[0;31m     \u001b[0mpopen\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0msubprocess\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mPopen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcmd\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mstdin\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0msubprocess\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mPIPE\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    104\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/subprocess.py\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, args, bufsize, executable, stdin, stdout, stderr, preexec_fn, close_fds, shell, cwd, env, universal_newlines, startupinfo, creationflags, restore_signals, start_new_session, pass_fds, user, group, extra_groups, encoding, errors, text, umask)\u001b[0m\n\u001b[1;32m    952\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 953\u001b[0;31m             self._execute_child(args, executable, preexec_fn, close_fds,\n\u001b[0m\u001b[1;32m    954\u001b[0m                                 \u001b[0mpass_fds\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcwd\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0menv\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/subprocess.py\u001b[0m in \u001b[0;36m_execute_child\u001b[0;34m(self, args, executable, preexec_fn, close_fds, pass_fds, cwd, env, startupinfo, creationflags, shell, p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite, restore_signals, gid, gids, uid, umask, start_new_session)\u001b[0m\n\u001b[1;32m   1820\u001b[0m                         \u001b[0merr_msg\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mos\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mstrerror\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0merrno_num\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1821\u001b[0;31m                     \u001b[0;32mraise\u001b[0m \u001b[0mchild_exception_type\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0merrno_num\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0merr_msg\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0merr_filename\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1822\u001b[0m                 \u001b[0;32mraise\u001b[0m \u001b[0mchild_exception_type\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0merr_msg\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mFileNotFoundError\u001b[0m: [Errno 2] No such file or directory: PosixPath('dot')",
+      "\nThe above exception was the direct cause of the following exception:\n",
+      "\u001b[0;31mExecutableNotFound\u001b[0m                        Traceback (most recent call last)",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/IPython/core/formatters.py\u001b[0m in \u001b[0;36m__call__\u001b[0;34m(self, obj, include, exclude)\u001b[0m\n\u001b[1;32m    968\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    969\u001b[0m             \u001b[0;32mif\u001b[0m \u001b[0mmethod\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 970\u001b[0;31m                 \u001b[0;32mreturn\u001b[0m \u001b[0mmethod\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0minclude\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0minclude\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mexclude\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mexclude\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    971\u001b[0m             \u001b[0;32mreturn\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    972\u001b[0m         \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/graphviz/jupyter_integration.py\u001b[0m in \u001b[0;36m_repr_mimebundle_\u001b[0;34m(self, include, exclude, **_)\u001b[0m\n\u001b[1;32m     96\u001b[0m         \u001b[0minclude\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mset\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0minclude\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0minclude\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32mNone\u001b[0m \u001b[0;32melse\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_jupyter_mimetype\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     97\u001b[0m         \u001b[0minclude\u001b[0m \u001b[0;34m-=\u001b[0m \u001b[0mset\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mexclude\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 98\u001b[0;31m         return {mimetype: getattr(self, method_name)()\n\u001b[0m\u001b[1;32m     99\u001b[0m                 \u001b[0;32mfor\u001b[0m \u001b[0mmimetype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmethod_name\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mMIME_TYPES\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mitems\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    100\u001b[0m                 if mimetype in include}\n",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/graphviz/jupyter_integration.py\u001b[0m in \u001b[0;36m<dictcomp>\u001b[0;34m(.0)\u001b[0m\n\u001b[1;32m     96\u001b[0m         \u001b[0minclude\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mset\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0minclude\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0minclude\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32mNone\u001b[0m \u001b[0;32melse\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_jupyter_mimetype\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     97\u001b[0m         \u001b[0minclude\u001b[0m \u001b[0;34m-=\u001b[0m \u001b[0mset\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mexclude\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 98\u001b[0;31m         return {mimetype: getattr(self, method_name)()\n\u001b[0m\u001b[1;32m     99\u001b[0m                 \u001b[0;32mfor\u001b[0m \u001b[0mmimetype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmethod_name\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mMIME_TYPES\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mitems\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    100\u001b[0m                 if mimetype in include}\n",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/graphviz/jupyter_integration.py\u001b[0m in \u001b[0;36m_repr_image_svg_xml\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m    110\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0m_repr_image_svg_xml\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;34m->\u001b[0m \u001b[0mstr\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    111\u001b[0m         \u001b[0;34m\"\"\"Return the rendered graph as SVG string.\"\"\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 112\u001b[0;31m         \u001b[0;32mreturn\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpipe\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mformat\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'svg'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mencoding\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mSVG_ENCODING\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/graphviz/piping.py\u001b[0m in \u001b[0;36mpipe\u001b[0;34m(self, format, renderer, formatter, quiet, engine, encoding)\u001b[0m\n\u001b[1;32m     96\u001b[0m             \u001b[0;34m'<?xml version='\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     97\u001b[0m         \"\"\"\n\u001b[0;32m---> 98\u001b[0;31m         return self._pipe_legacy(format,\n\u001b[0m\u001b[1;32m     99\u001b[0m                                  \u001b[0mrenderer\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mrenderer\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    100\u001b[0m                                  \u001b[0mformatter\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mformatter\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/graphviz/_tools.py\u001b[0m in \u001b[0;36mwrapper\u001b[0;34m(*args, **kwargs)\u001b[0m\n\u001b[1;32m    159\u001b[0m                               category=category)\n\u001b[1;32m    160\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 161\u001b[0;31m             \u001b[0;32mreturn\u001b[0m \u001b[0mfunc\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    162\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    163\u001b[0m         \u001b[0;32mreturn\u001b[0m \u001b[0mwrapper\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/graphviz/piping.py\u001b[0m in \u001b[0;36m_pipe_legacy\u001b[0;34m(self, format, renderer, formatter, quiet, engine, encoding)\u001b[0m\n\u001b[1;32m    111\u001b[0m                      \u001b[0mengine\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mtyping\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mOptional\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mstr\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    112\u001b[0m                      encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:\n\u001b[0;32m--> 113\u001b[0;31m         return self._pipe_future(format,\n\u001b[0m\u001b[1;32m    114\u001b[0m                                  \u001b[0mrenderer\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mrenderer\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    115\u001b[0m                                  \u001b[0mformatter\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mformatter\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/graphviz/piping.py\u001b[0m in \u001b[0;36m_pipe_future\u001b[0;34m(self, format, renderer, formatter, quiet, engine, encoding)\u001b[0m\n\u001b[1;32m    136\u001b[0m             \u001b[0;32mif\u001b[0m \u001b[0mcodecs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mlookup\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mencoding\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0mcodecs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mlookup\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mencoding\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    137\u001b[0m                 \u001b[0;31m# common case: both stdin and stdout need the same encoding\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 138\u001b[0;31m                 \u001b[0;32mreturn\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_pipe_lines_string\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mencoding\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mencoding\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    139\u001b[0m             \u001b[0mraw\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_pipe_lines\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0minput_encoding\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mencoding\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    140\u001b[0m             \u001b[0;32mreturn\u001b[0m \u001b[0mraw\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdecode\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mencoding\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/graphviz/backend/piping.py\u001b[0m in \u001b[0;36mpipe_lines_string\u001b[0;34m(engine, format, input_lines, encoding, renderer, formatter, quiet)\u001b[0m\n\u001b[1;32m    194\u001b[0m     \u001b[0mkwargs\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0;34m'input_lines'\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0minput_lines\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m'encoding'\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mencoding\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    195\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 196\u001b[0;31m     \u001b[0mproc\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mexecute\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mrun_check\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcmd\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcapture_output\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;32mTrue\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mquiet\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mquiet\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    197\u001b[0m     \u001b[0;32mreturn\u001b[0m \u001b[0mproc\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mstdout\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.9/site-packages/graphviz/backend/execute.py\u001b[0m in \u001b[0;36mrun_check\u001b[0;34m(cmd, input_lines, encoding, capture_output, quiet, **kwargs)\u001b[0m\n\u001b[1;32m     86\u001b[0m     \u001b[0;32mexcept\u001b[0m \u001b[0mOSError\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     87\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0merrno\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0merrno\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mENOENT\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 88\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0mExecutableNotFound\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcmd\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     89\u001b[0m         \u001b[0;32mraise\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     90\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mExecutableNotFound\u001b[0m: failed to execute PosixPath('dot'), make sure the Graphviz executables are on your systems' PATH"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "<graphviz.sources.Source at 0x7a93a33430>"
+      ]
+     },
+     "execution_count": 85,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import graphviz\n",
+    "\n",
+    "with open(\"music.dot\") as f:\n",
+    "    dot_graph = f.read()\n",
+    "\n",
+    "# remove the display(...)\n",
+    "\n",
+    "graphviz.Source(dot_graph)"
+   ]
+  }
+ ],
+ "metadata": {
+  "hide_input": false,
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  },
+  "latex_envs": {
+   "LaTeX_envs_menu_present": true,
+   "autoclose": false,
+   "autocomplete": true,
+   "bibliofile": "biblio.bib",
+   "cite_by": "apalike",
+   "current_citInitial": 1,
+   "eqLabelWithNumbers": true,
+   "eqNumInitial": 1,
+   "hotkeys": {
+    "equation": "Ctrl-E",
+    "itemize": "Ctrl-I"
+   },
+   "labels_anchors": false,
+   "latex_user_defs": false,
+   "report_style_numbering": false,
+   "user_envs_cfg": false
+  },
+  "nbTranslate": {
+   "displayLangs": [
+    "*"
+   ],
+   "hotkey": "alt-t",
+   "langInMainMenu": true,
+   "sourceLang": "en",
+   "targetLang": "fr",
+   "useGoogleTranslate": true
+  },
+  "toc": {
+   "base_numbering": 1,
+   "nav_menu": {},
+   "number_sections": true,
+   "sideBar": true,
+   "skip_h1_title": false,
+   "title_cell": "Table of Contents",
+   "title_sidebar": "Contents",
+   "toc_cell": false,
+   "toc_position": {},
+   "toc_section_display": true,
+   "toc_window_display": false
+  },
+  "varInspector": {
+   "cols": {
+    "lenName": 16,
+    "lenType": 16,
+    "lenVar": 40
+   },
+   "kernels_config": {
+    "python": {
+     "delete_cmd_postfix": "",
+     "delete_cmd_prefix": "del ",
+     "library": "var_list.py",
+     "varRefreshCmd": "print(var_dic_list())"
+    },
+    "r": {
+     "delete_cmd_postfix": ") ",
+     "delete_cmd_prefix": "rm(",
+     "library": "var_list.r",
+     "varRefreshCmd": "cat(var_dic_list()) "
+    }
+   },
+   "types_to_exclude": [
+    "module",
+    "function",
+    "builtin_function_or_method",
+    "instance",
+    "_Feature"
+   ],
+   "window_display": false
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
